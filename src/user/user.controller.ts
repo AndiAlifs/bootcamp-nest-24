@@ -1,15 +1,18 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
+import { UppercasePipe } from 'src/pipes/uppercase/uppercase.pipe';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
     constructor(private userService: UserService) {}
 
     @Get()
-    getUser() {
+    getUserName(@Query('name', UppercasePipe) name: string) {
         return {
             'messageId': '00',
-            'data': this.userService.getUser()
+            'data': 'Hello ' + name
         };
     }
 
