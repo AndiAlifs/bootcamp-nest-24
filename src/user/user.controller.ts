@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UppercasePipe } from 'src/pipes/uppercase/uppercase.pipe';
-import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { UppercasePipe } from '../pipes/uppercase/uppercase.pipe';
+import { AuthGuard } from '../guards/auth/auth.guard';
+import { LoggingInterceptor } from '../interceptor/logging/logging.interceptor';
 
 @UseGuards(AuthGuard)
 @Controller('user')
+@UseInterceptors(LoggingInterceptor)
 export class UserController {
     constructor(private userService: UserService) {}
 
