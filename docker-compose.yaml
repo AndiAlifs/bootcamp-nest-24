@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DB_USERNAME?Variable not set}
+      - POSTGRES_PASSWORD=${DB_PASSWORD?Variable not set}
+      - POSTGRES_DB=${DB_NAME?Variable not set}
+    volumes:  
+    - pgdata:/var/lib/postgresql/data
+    ports:
+    - 5432:5432
+
+volumes:
+  pgdata:
